@@ -151,3 +151,12 @@ with col2:
         result = run_prediction(audio_norm, model)
     except:
         pass
+st.markdown(
+   f”””
+   <style>
+   p {
+   background-image: url(‘background.jpg’);
+   }
+   </style>
+   ”””,
+   unsafe_allow_html=True)
