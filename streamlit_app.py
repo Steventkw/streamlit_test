@@ -140,6 +140,56 @@ with col1:
             unsafe_allow_html=True,
         )
 
+        music_file = st.file_uploader("Choose a music file")
+        obj = (music_file, rb)
+        sample_freq = obj.getframerate()
+        n_samples = obj.getnframes()
+        signal_wave = obj.readframes(-1)
+        duration = n_samples/sample_freq
+        signal_array = np.frombuffer(signal_wave, dtype=np.int16)
+        time = np.linspace(0, duration, num=n_samples)
+
+# Generate some sample data
+        t = time[::10000]
+        x = (signal_array[::20000])
+
+# Create the figure and axes for the plot
+        fig, ax = plt.subplots()
+
+# Plot the initial waveform
+        line, = ax.plot(t, x)
+
+# Define the animation function
+        def animate(i):
+    # Shift the waveform by one step to the left
+            n = i % len(x)
+            if list(x[n:])==[]:
+            y=x
+            elif list(x[:n])==[]:
+            y=x
+            else:
+            y = list(x[n:]) + list(x[:n])
+            line.set_ydata(y)
+            return line,
+
+# Define the animation object
+        ani = animation.FuncAnimation(fig, animate, frames=800, interval=10, blit=False)
+
+        # Set the axis limits and labels
+        # Removing the borders
+        #ax.set_xlim(0, 2*np.pi)
+        #ax.set_ylim(-1, 1)
+        ax.set_xlabel('Time').set_visible(False)
+        ax.set_ylabel('Signal Wave').set_visible(False)
+        ax.spines['top'].set_visible(False)
+        ax.spines['right'].set_visible(False)
+        ax.spines['bottom'].set_visible(False)
+        ax.spines['left'].set_visible(False)
+        ax.axis('off')
+
+# Show the plot
+        components.html(ani.to_jshtml(),height=1000)
+
 with col2:
     #tempo, beats = extract_features(audio_norm, sr)
     #st.markdown(f'The tempo of the song is: {tempo}, and the beats are {beats}')
@@ -151,53 +201,3 @@ with col2:
         result = run_prediction(audio_norm, model)
     except:
         pass
-
-music_file = st.file_uploader("Choose a music file")
-obj = (music_file, rb)
-sample_freq = obj.getframerate()
-n_samples = obj.getnframes()
-signal_wave = obj.readframes(-1)
-duration = n_samples/sample_freq
-signal_array = np.frombuffer(signal_wave, dtype=np.int16)
-time = np.linspace(0, duration, num=n_samples)
-
-# Generate some sample data
-t = time[::10000]
-x = (signal_array[::20000])
-
-# Create the figure and axes for the plot
-fig, ax = plt.subplots()
-
-# Plot the initial waveform
-line, = ax.plot(t, x)
-
-# Define the animation function
-def animate(i):
-    # Shift the waveform by one step to the left
-    n = i % len(x)
-    if list(x[n:])==[]:
-        y=x
-    elif list(x[:n])==[]:
-        y=x
-    else:
-        y = list(x[n:]) + list(x[:n])
-    line.set_ydata(y)
-    return line,
-
-# Define the animation object
-ani = animation.FuncAnimation(fig, animate, frames=800, interval=10, blit=False)
-
-# Set the axis limits and labels
-# Removing the borders
-#ax.set_xlim(0, 2*np.pi)
-#ax.set_ylim(-1, 1)
-ax.set_xlabel('Time').set_visible(False)
-ax.set_ylabel('Signal Wave').set_visible(False)
-ax.spines['top'].set_visible(False)
-ax.spines['right'].set_visible(False)
-ax.spines['bottom'].set_visible(False)
-ax.spines['left'].set_visible(False)
-ax.axis('off')
-
-# Show the plot
-components.html(ani.to_jshtml(),height=1000)
