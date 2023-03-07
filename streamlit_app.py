@@ -16,7 +16,7 @@ st.title('MCATs: Music Category Analyzing Tools')
 
 st.header('Brought to you by:')
 st.markdown('Alexandre Bun, Ryan Massey, Sarah Deutchman, Steven Tin')
-
+st.markdown('Alexandre Bun, Ryan Massey, Sarah Deutchman, Steven Tin')
 def normalize_volume(music_file):
     audio, sr = librosa.load(music_file, offset=30.0, duration=30.0)
     st.audio(audio, sample_rate=sr)
