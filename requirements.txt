@@ -4,3 +4,4 @@ librosa
 matplotlib
 keras
 tensorflow
+ipython
