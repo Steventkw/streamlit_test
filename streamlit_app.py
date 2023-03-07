@@ -164,11 +164,11 @@ with col1:
     # Shift the waveform by one step to the left
             n = i % len(x)
             if list(x[n:])==[]:
-            y=x
+                y=x
             elif list(x[:n])==[]:
-            y=x
+                y=x
             else:
-            y = list(x[n:]) + list(x[:n])
+                y = list(x[n:]) + list(x[:n])
             line.set_ydata(y)
             return line,
 
