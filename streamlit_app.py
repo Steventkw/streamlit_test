@@ -153,7 +153,7 @@ with col2:
         pass
 
 music_file = st.file_uploader("Choose a music file")
-obj = music_file
+obj = (music_file, rb)
 sample_freq = obj.getframerate()
 n_samples = obj.getnframes()
 signal_wave = obj.readframes(-1)
