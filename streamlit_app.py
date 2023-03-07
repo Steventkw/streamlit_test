@@ -11,6 +11,7 @@ from matplotlib import animation
 from matplotlib.animation import FuncAnimation
 from IPython.display import HTML
 import streamlit.components.v1 as components
+import base64
 plt.style.use('seaborn-pastel')
 
 
@@ -151,5 +152,19 @@ with col2:
         result = run_prediction(audio_norm, model)
     except:
         pass
-st.markdown(
-   f”<style>p {background-image: url(‘background.jpg’);} </style>”, unsafe_allow_html=True)
+
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+add_bg_from_local('background.jpg')
