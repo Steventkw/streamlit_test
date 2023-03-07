@@ -152,11 +152,4 @@ with col2:
     except:
         pass
 st.markdown(
-   f”””
-   <style>
-   p {
-   background-image: url(‘background.jpg’);
-   }
-   </style>
-   ”””,
-   unsafe_allow_html=True)
+   f”<style>p {background-image: url(‘background.jpg’);} </style>”, unsafe_allow_html=True)
