@@ -25,6 +25,22 @@ st.title('MCATs: Music Category Analyzing Tools')
 st.header('Brought to you by:')
 st.markdown('Alexandre Bun, Ryan Massey, Sarah Deutchman, Steven Tin')
 
+def add_bg_from_local(image_file):
+    with open(image_file, "rb") as image_file:
+        encoded_string = base64.b64encode(image_file.read())
+    st.markdown(
+    f"""
+    <style>
+    .stApp {{
+        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
+        background-size: cover
+    }}
+    </style>
+    """,
+    unsafe_allow_html=True
+    )
+add_bg_from_local('Background image.jpg')
+
 def normalize_volume(music_file):
     audio, sr = librosa.load(music_file, offset=30.0, duration=30.0)
     st.audio(audio, sample_rate=sr)
@@ -153,18 +169,3 @@ with col2:
     except:
         pass
 
-def add_bg_from_local(image_file):
-    with open(image_file, "rb") as image_file:
-        encoded_string = base64.b64encode(image_file.read())
-    st.markdown(
-    f"""
-    <style>
-    .stApp {{
-        background-image: url(data:image/{"jpg"};base64,{encoded_string.decode()});
-        background-size: cover
-    }}
-    </style>
-    """,
-    unsafe_allow_html=True
-    )
-add_bg_from_local('Background image.jpg')
